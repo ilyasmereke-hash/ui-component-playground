@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UI Component Playground</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="scrollProgressBar" class="scroll-progress-bar" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow-bottom" aria-hidden="true"></div>
+  <div id="pointerAura" class="edge-pointer-aura" aria-hidden="true"></div>
+
+  <!-- Жанды пульс күй индикаторы -->
+  <div id="stateHeartbeat" class="state-heartbeat" aria-live="polite">
+    <span class="heartbeat-dot" aria-hidden="true"></span>
+    <span id="heartbeatKeyLabel" class="heartbeat-key">state.ready</span>
+    <span id="heartbeatStatusLabel" class="heartbeat-status">күй тұрақты</span>
+  </div>
+
+  <!-- Сол жақ шеттегі 1-ші 3D код шеңбері -->
+  <aside class="edge-code-ring edge-ring-left-top" aria-hidden="true">
+    <div id="edgeCodeRainLeftTop" class="edge-code-rain"></div>
+    <div class="edge-code-3d-stage">
+      <div id="rotorLeftTop" class="edge-code-3d-rotor">
+        <div class="ring-3d-halo ring-3d-back"></div>
+        <div class="ring-3d-halo ring-3d-front"></div>
+        <svg viewBox="0 0 320 320" width="320" height="320">
+          <defs>
+            <path
+              id="leftTopOuter"
+              d="M 160, 160 m -124, 0 a 124,124 0 1,1 248,0 a 124,124 0 1,1 -248,0"
+            />
+            <path
+              id="leftTopInner"
+              d="M 160, 160 m -84, 0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0"
+            />
+          </defs>
+          <circle class="ring-guide ring-guide-outer" cx="160" cy="160" r="124" fill="none" stroke-dasharray="4 6" />
+          <circle class="ring-guide ring-guide-inner" cx="160" cy="160" r="84" fill="none" stroke-dasharray="3 5" />
+          <g id="spinLeftTopOuter">
+            <text class="ring-code-text ring-code-outer" dy="-3">
+              <textPath id="leftTopOuterTextPath" href="#leftTopOuter" startOffset="0%">
+                flex-direction: column · gap: 18px · border-radius: 18px · state.activeTab ·
+              </textPath>
+            </text>
+          </g>
+          <g id="spinLeftTopInner">
+            <text class="ring-code-text ring-code-inner" dy="4">
+              <textPath href="#leftTopInner" startOffset="0%">
+                aria-selected="true" · role="tablist" · localStorage.setItem() ·
+              </textPath>
+            </text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Сол жақ шеттегі 2-ші 3D код шеңбері -->
+  <aside class="edge-code-ring edge-ring-left-bottom" aria-hidden="true">
+    <div id="edgeCodeRainLeftBottom" class="edge-code-rain"></div>
+    <div class="edge-code-3d-stage">
+      <div id="rotorLeftBottom" class="edge-code-3d-rotor">
+        <div class="ring-3d-halo ring-3d-back"></div>
+        <div class="ring-3d-halo ring-3d-front"></div>
+        <svg viewBox="0 0 320 320" width="320" height="320">
+          <defs>
+            <path
+              id="leftBottomOuter"
+              d="M 160, 160 m -124, 0 a 124,124 0 1,1 248,0 a 124,124 0 1,1 -248,0"
+            />
+            <path
+              id="leftBottomInner"
+              d="M 160, 160 m -84, 0 a 84,84 0 1,1 168,0 a 84,84 0 1,1 -168,0"
+            />
+          </defs>
+          <circle class="ring-guide ring-guide-outer" cx="160" cy="160" r="124" fill="none" stroke-dasharray="4 6" />
+          <circle class="ring-guide ring-guide-inner" cx="160" cy="160" r="84" fill="none" stroke-dasharray="3 5" />
+          <g id="spinLeftBottomOuter">
+            <text class="ring-code-text ring-code-outer" dy="-3">
+              <textPath id="leftBottomOuterTextPath" href="#leftBottomOuter" startOffset="0%">
+                JSON.stringify(state) · filter() · sort() · scrollIntoView() · 3D orbit ·
+              </textPath>
+            </text>
+          </g>
+          <g id="spinLeftBottomInner">
+            <text class="ring-code-text ring-code-inner" dy="4">
+              <textPath href="#leftBottomInner" startOffset="0%">
+                pointermove · requestAnimationFrame · cubic-bezier(0.22, 1, 0.36, 1) ·
+              </textPath>
+            </text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Оң жақ шеттегі негізгі 3D код шеңбері -->
+  <aside class="edge-code-ring edge-ring-right" aria-hidden="true">
+    <div id="edgeCodeRain" class="edge-code-rain"></div>
+
+    <div id="edgeCode3dStage" class="edge-code-3d-stage">
+      <div id="edgeCode3dRotor" class="edge-code-3d-rotor">
+        <div class="ring-3d-halo ring-3d-back"></div>
+        <div class="ring-3d-halo ring-3d-mid"></div>
+        <div class="ring-3d-halo ring-3d-front"></div>
+        <div class="ring-pulse-scan"></div>
+
+        <svg id="edgeCodeSvg" viewBox="0 0 380 380" width="380" height="380">
+          <defs>
+            <path
+              id="codeCircleOuter"
+              d="M 190, 190 m -150, 0 a 150,150 0 1,1 300,0 a 150,150 0 1,1 -300,0"
+            />
+            <path
+              id="codeCircleMiddle"
+              d="M 190, 190 m -114, 0 a 114,114 0 1,1 228,0 a 114,114 0 1,1 -228,0"
+            />
+            <path
+              id="codeCircleInner"
+              d="M 190, 190 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
+            />
+          </defs>
+
+          <circle class="ring-guide ring-guide-outer" cx="190" cy="190" r="150" fill="none" stroke-dasharray="5 6" />
+          <circle class="ring-guide ring-guide-mid" cx="190" cy="190" r="114" fill="none" stroke-dasharray="2 6" />
+          <circle class="ring-guide ring-guide-inner" cx="190" cy="190" r="78" fill="none" stroke-dasharray="4 5" />
+          <circle class="ring-crosshair" cx="190" cy="190" r="8" fill="none" />
+
+          <g id="edgeOuterSpin">
+            <text class="ring-code-text ring-code-outer" dy="-4">
+              <textPath id="outerRingTextPath" href="#codeCircleOuter" startOffset="0%">
+                &lt;button class="btn"&gt; · state.theme · localStorage.getItem() · flex-wrap · 3D ·
+              </textPath>
+            </text>
+          </g>
+
+          <g id="edgeMidSpin">
+            <text class="ring-code-text ring-code-mid" dy="-2">
+              <textPath id="midRingTextPath" href="#codeCircleMiddle" startOffset="0%">
+                perspective(800px) · rotateX(22deg) · rotateY(-24deg) · pointermove ·
+              </textPath>
+            </text>
+          </g>
+
+          <g id="edgeInnerSpin">
+            <text class="ring-code-text ring-code-inner" dy="4">
+              <textPath id="innerRingTextPath" href="#codeCircleInner" startOffset="0%">
+                const [state, setState] = · aria-expanded="true" · grid-template-columns ·
+              </textPath>
+            </text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <header class="topbar" data-depth-layer="z-index: 10 · Header">
+    <div>
+      <h1>UI Component Playground</h1>
+      <p class="subtitle">Жұмсақ минималистік интерфейс компоненттерінің витринасы</p>
+    </div>
+    <div class="topbar-actions">
+      <button id="petsToggleBtn" class="btn btn-ghost active" type="button" aria-pressed="true">
+        Жануарлар: Қосулы
+      </button>
+      <button id="soundToggleBtn" class="btn btn-ghost sound-btn active" type="button" aria-pressed="true" title="Web Audio микро-дыбыстар">
+        <span class="sound-wave" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+        </span>
+        <span id="soundBtnLabel">Дыбыс: Қосулы</span>
+      </button>
+      <button id="xrayToggleBtn" class="btn btn-ghost" type="button" aria-pressed="false" title="DOM қабаттарын 3D кеңістікте көру">
+        3D Рентген
+      </button>
+      <button id="themeToggleBtn" class="btn btn-secondary" type="button">
+        Қою тема
+      </button>
+      <button id="resetStateBtn" class="btn btn-ghost" type="button">
+        Күйді тазалау
+      </button>
+      <button id="openModalBtn" class="btn btn-primary" type="button">
+        Модаль ашу
+      </button>
+    </div>
+  </header>
+
+  <main id="xrayStage" class="container">
+    <!-- Уақыт машинасы (State Time-Travel) панелі -->
+    <section class="time-travel-bar" data-depth-layer="z-index: 8 · Time-Travel" aria-label="Күй уақыт машинасы">
+      <div class="tt-left">
+        <span class="badge">Уақыт машинасы</span>
+        <button id="undoStateBtn" class="btn btn-ghost btn-sm" type="button" disabled title="Ctrl+Z">
+          ↶ Артқа
+        </button>
+        <button id="redoStateBtn" class="btn btn-ghost btn-sm" type="button" disabled title="Ctrl+Y">
+          ↷ Алға
+        </button>
+      </div>
+
+      <div class="tt-center">
+        <input
+          id="timeTravelSlider"
+          class="tt-slider"
+          type="range"
+          min="0"
+          max="0"
+          value="0"
+          aria-label="Күй тарихының уақыт шкаласы"
+        />
+      </div>
+
+      <div class="tt-right">
+        <span id="timeTravelStepLabel" class="tt-meta">Кадр: 1 / 1</span>
+        <span id="timeTravelEventLabel" class="tt-event">Бастапқы күй</span>
+      </div>
+    </section>
+
+    <nav class="quick-bar" data-depth-layer="z-index: 6 · Quick Controls" aria-label="Жылдам өту, атмосфера, суреттер, акцент және 3D режим басқаруы">
+      <div class="quick-jump-group">
+        <span class="quick-label">Өту:</span>
+        <button class="quick-link active" type="button" data-jump="#buttonsSection">1. Батырмалар</button>
+        <button class="quick-link" type="button" data-jump="#tabsSection">2. Қойылымдар</button>
+        <button class="quick-link" type="button" data-jump="#filterSection">3. Карточкалар</button>
+        <button class="quick-link" type="button" data-jump="#codeSection">6. Код</button>
+        <button class="quick-link" type="button" data-jump="#stateSection">7. Күй</button>
+      </div>
+
+      <div class="quick-controls-right">
+        <div class="mood-group" role="group" aria-label="Атмосфера көңіл-күйі">
+          <span class="quick-label">Атмосфера:</span>
+          <button class="mood-pill active" type="button" data-mood="dawn">Таң</button>
+          <button class="mood-pill" type="button" data-mood="studio">Студия</button>
+          <button class="mood-pill" type="button" data-mood="archive">Архив</button>
+        </div>
+
+        <div class="preset-group" role="group" aria-label="Дайын күй суреттері">
+          <span class="quick-label">Сурет:</span>
+          <button class="preset-pill" type="button" data-preset="focus">Қараңғы фокус</button>
+          <button class="preset-pill" type="button" data-preset="terracotta">Терракота</button>
+          <button class="preset-pill" type="button" data-preset="favorites">Таңдаулылар</button>
+        </div>
+
+        <div class="accent-group" role="group" aria-label="Акцент реңкі">
+          <span class="quick-label">Акцент:</span>
+          <button class="accent-pill active" type="button" data-accent="teal">Teal</button>
+          <button class="accent-pill" type="button" data-accent="terracotta">Terracotta</button>
+          <button class="accent-pill" type="button" data-accent="slate">Slate</button>
+          <button class="accent-pill" type="button" data-accent="sage">Sage</button>
+        </div>
+
+        <div class="ring-mode-group" role="group" aria-label="3D сақина режимі">
+          <span class="quick-label">3D:</span>
+          <button class="mode-pill active" type="button" data-ring-mode="orbit">Орбита</button>
+          <button class="mode-pill" type="button" data-ring-mode="calm">Тыныш</button>
+          <button class="mode-pill" type="button" data-ring-mode="hyper">Гипер-импульс</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero-card" data-depth-layer="z-index: 4 · Hero Showcase" aria-label="Витрина шолуы">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Design System Sandbox</span>
+        <h2>Таза иерархия, жұмсақ реңктер және уақыт машинасы</h2>
+        <p>
+          Уақыт машинасымен (<kbd>Ctrl</kbd>+<kbd>Z</kbd>) күйді кері шегеріп, Web Audio
+          тактильді микро-дыбыстарын тыңдап, 3D Рентген арқылы DOM қабаттарын көріп,
+          сүзгі/сұрыптау/салыстыру мен <code>localStorage</code> күйін сынап көріңіз.
+        </p>
+        <div class="shortcut-strip" aria-label="Пернетақта шорткаттары">
+          <span><kbd>/</kbd> іздеуге өту</span>
+          <span><kbd>Alt</kbd> + <kbd>T</kbd> тема</span>
+          <span><kbd>Ctrl</kbd> + <kbd>Z</kbd> артқа</span>
+          <span><kbd>Esc</kbd> модаль/рентген жабу</span>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img
+          src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=900&q=80"
+          alt="Дизайнердің заманауи жұмыс үстелі мен интерфейсі"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
+    <section id="buttonsSection" class="panel" data-depth-layer="z-index: 2 · Section 01" aria-labelledby="buttonsTitle">
+      <div class="panel-head">
+        <h2 id="buttonsTitle">1. Батырма күйлері, Toast және жанды конфигуратор</h2>
+        <button class="btn btn-ghost copy-snippet" data-snippet="buttons" type="button">
+          Кодты көру
+        </button>
+      </div>
+      <div class="demo-row">
+        <button id="demoPrimaryBtn" class="btn btn-primary" type="button">Негізгі әрекет</button>
+        <button id="demoSecondaryBtn" class="btn btn-secondary" type="button">Қосымша</button>
+        <button id="demoLoadingBtn" class="btn btn-soft" type="button">Жүктеу күйін сынау</button>
+        <button id="demoToastBtn" class="btn btn-ghost" type="button">Тост шығару</button>
+      </div>
+      <p id="btnStatus" class="status-text">Күй: дайын</p>
+
+      <div class="configurator-box" aria-label="Батырма конфигураторы">
+        <div class="configurator-controls">
+          <input
+            id="cfgTextInput"
+            class="form-control cfg-text"
+            type="text"
+            maxlength="36"
+            placeholder="Батырма мәтіні..."
+            aria-label="Батырма мәтіні"
+          />
+          <select id="cfgVariantSelect" class="form-control" aria-label="Батырма нұсқасы">
+            <option value="btn-primary">btn-primary</option>
+            <option value="btn-secondary">btn-secondary</option>
+            <option value="btn-soft">btn-soft</option>
+            <option value="btn-ghost">btn-ghost</option>
+          </select>
+          <select id="cfgSizeSelect" class="form-control" aria-label="Батырма өлшемі">
+            <option value="normal">Қалыпты</option>
+            <option value="sm">Ықшам (sm)</option>
+          </select>
+          <label class="cfg-checkbox">
+            <input id="cfgDisabledCheck" type="checkbox" />
+            <span>Disabled күйі</span>
+          </label>
+          <button id="cfgSendToCodeBtn" class="btn btn-ghost btn-sm" type="button">
+            Кодын 6-бөлімге жіберу
+          </button>
+        </div>
+
+        <div class="configurator-preview">
+          <span class="badge">Жанды превью</span>
+          <button id="cfgPreviewBtn" class="btn btn-primary" type="button">Сақтау</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="tabsSection" class="panel" data-depth-layer="z-index: 2 · Section 02" aria-labelledby="tabsTitle">
+      <div class="panel-head">
+        <h2 id="tabsTitle">2. Қойылымдар (Tabs) компоненті</h2>
+        <button class="btn btn-ghost copy-snippet" data-snippet="tabs" type="button">
+          Кодты көру
+        </button>
+      </div>
+
+      <div class="tabs-list" role="tablist" aria-label="Компонент бөлімдері">
+        <button
+          id="tab-overview"
+          class="tab-btn active"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-overview"
+          data-tab="overview"
+        >
+          Шолу
+        </button>
+        <button
+          id="tab-keyboard"
+          class="tab-btn"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-keyboard"
+          data-tab="keyboard"
+          tabindex="-1"
+        >
+          Пернетақта
+        </button>
+        <button
+          id="tab-state"
+          class="tab-btn"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-state"
+          data-tab="state"
+          tabindex="-1"
+        >
+          Күйді сақтау
+        </button>
+      </div>
+
+      <div id="tabPanels" class="tab-panels"></div>
+    </section>
+
+    <section id="filterSection" class="panel" data-depth-layer="z-index: 3 · Section 03" aria-labelledby="filterTitle">
+      <div class="panel-head">
+        <h2 id="filterTitle">3. Компоненттерді іздеу, сүзгілеу, сұрыптау, реттеу, салыстыру және қосу</h2>
+        <button class="btn btn-ghost copy-snippet" data-snippet="sort" type="button">
+          Кодты көру
+        </button>
+      </div>
+
+      <div class="controls-toolbar">
+        <div class="filter-bar" role="group" aria-label="Категория сүзгісі">
+          <button class="chip active" data-category="all" type="button">Барлығы</button>
+          <button class="chip" data-category="favorites" type="button">Таңдаулылар</button>
+          <button class="chip" data-category="ui" type="button">UI</button>
+          <button class="chip" data-category="state" type="button">Күйлер</button>
+          <button class="chip" data-category="layout" type="button">Орналасу</button>
+        </div>
+
+        <div class="toolbar-right">
+          <button
+            id="activeTagBadge"
+            class="active-tag-chip hidden"
+            type="button"
+            title="Тег сүзгісін алу"
+          ></button>
+
+          <select id="sortSelect" class="form-control sort-select" aria-label="Сұрыптау тәртібі">
+            <option value="default">Реті: қолмен / әдепкі</option>
+            <option value="title-asc">Атауы (А–Я)</option>
+            <option value="category-asc">Санаты (A–Z)</option>
+          </select>
+
+          <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            placeholder="Атауы, тегі немесе сипаттамасы бойынша іздеу..."
+            aria-label="Компоненттерді іздеу"
+          />
+
+          <button id="clearFiltersBtn" class="btn btn-ghost btn-sm" type="button">
+            Сүзгіні тазалау
+          </button>
+        </div>
+      </div>
+
+      <form id="addCardForm" class="add-card-form" aria-label="Жаңа компонент карточкасын қосу">
+        <input
+          id="cardTitleInput"
+          class="form-control"
+          type="text"
+          maxlength="60"
+          placeholder="Компонент атауы (мысалы: Тост хабарлама)"
+          required
+        />
+        <select id="cardCategorySelect" class="form-control" aria-label="Санатты таңдау">
+          <option value="ui">ui</option>
+          <option value="state">state</option>
+          <option value="layout">layout</option>
+        </select>
+        <input
+          id="cardTagInput"
+          class="form-control form-tag"
+          type="text"
+          maxlength="24"
+          placeholder="Тег (мысалы: accessible)"
+        />
+        <input
+          id="cardDescInput"
+          class="form-control form-desc"
+          type="text"
+          maxlength="140"
+          placeholder="Қысқа сипаттамасы..."
+          required
+        />
+        <button class="btn btn-primary" type="submit">Қосу</button>
+      </form>
+
+      <p id="resultsMeta" class="status-text"></p>
+      <div id="cardsGrid" class="cards-grid"></div>
+
+      <!-- Карточкаларды қатар салыстыру панелі -->
+      <div id="comparePanel" class="compare-panel hidden" aria-label="Таңдалған карточкаларды салыстыру">
+        <div class="compare-head">
+          <div class="code-title-group">
+            <h3>Салыстыру кестесі</h3>
+            <span id="compareCountBadge" class="badge">0 / 3</span>
+          </div>
+          <button id="clearCompareBtn" class="btn btn-ghost btn-sm" type="button">
+            Салыстыруды тазалау
+          </button>
+        </div>
+        <div id="compareTableWrap" class="compare-table-wrap"></div>
+      </div>
+    </section>
+
+    <section class="panel" data-depth-layer="z-index: 2 · Section 04" aria-labelledby="accordionTitle">
+      <div class="panel-head">
+        <h2 id="accordionTitle">4. Техникалық ескертпелер (Accordion)</h2>
+        <button class="btn btn-ghost copy-snippet" data-snippet="accordion" type="button">
+          Кодты көру
+        </button>
+      </div>
+      <div id="accordionList" class="accordion-list"></div>
+    </section>
+
+    <section class="panel" data-depth-layer="z-index: 2 · Section 05" aria-labelledby="switchesTitle">
+      <div class="panel-head">
+        <h2 id="switchesTitle">5. Баптау қосқыштары, Контраст/Кеңістік және Журнал</h2>
+        <button class="btn btn-ghost copy-snippet" data-snippet="switch" type="button">
+          Кодты көру
+        </button>
+      </div>
+      <div class="switch-list">
+        <div class="switch-row">
+          <div>
+            <strong>Ықшам орналасу (Compact)</strong>
+            <p class="switch-desc">Панельдер мен аралықтарды жинақы етеді.</p>
+          </div>
+          <button
+            id="compactSwitchBtn"
+            class="switch-btn"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            aria-label="Ықшам орналасу"
+          >
+            <span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="switch-row">
+          <div>
+            <strong>Кодқа автоматты өту</strong>
+            <p class="switch-desc">«Кодты көру» басылғанда код блогына жайлап сырғытады.</p>
+          </div>
+          <button
+            id="autoScrollSwitchBtn"
+            class="switch-btn active"
+            type="button"
+            role="switch"
+            aria-checked="true"
+            aria-label="Кодқа автоматты өту"
+          >
+            <span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="switch-row">
+          <div>
+            <strong>Контраст және бос кеңістік тексергіші</strong>
+            <p class="switch-desc">Карточкалар мен батырмалардың өлшемдерін (px) және контраст белгілерін көрнекі көрсетеді.</p>
+          </div>
+          <button
+            id="inspectOverlaySwitchBtn"
+            class="switch-btn"
+            type="button"
+            role="switch"
+            aria-checked="false"
+            aria-label="Контраст және бос кеңістік тексергіші"
+          >
+            <span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="switch-row">
+          <div>
+            <strong>Оқиғалар журналы (Activity Log)</strong>
+            <p class="switch-desc">Беттегі әрекеттер тарихын төменде көрсетеді немесе жасырады.</p>
+          </div>
+          <button
+            id="activityLogSwitchBtn"
+            class="switch-btn active"
+            type="button"
+            role="switch"
+            aria-checked="true"
+            aria-label="Оқиғалар журналы"
+          >
+            <span class="switch-thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <div id="activityLogBox" class="activity-box" aria-label="Оқиғалар журналы">
+        <div class="activity-head">
+          <div class="code-title-group">
+            <h3>Соңғы әрекеттер журналы</h3>
+            <span id="activityCountBadge" class="badge">0</span>
+          </div>
+          <button id="clearActivityBtn" class="btn btn-ghost btn-sm" type="button">
+            Журналды тазалау
+          </button>
+        </div>
+        <ul id="activityLogList" class="activity-list"></ul>
+      </div>
+    </section>
+
+    <section id="codeSection" class="panel" data-depth-layer="z-index: 2 · Section 06" aria-labelledby="codeTitle">
+      <div class="panel-head">
+        <div class="code-title-group">
+          <h2 id="codeTitle">6. Таңдалған компонент коды және өңдеуші</h2>
+          <span id="activeSnippetLabel" class="badge">buttons</span>
+          <span id="customCodeBadge" class="badge hidden">өңделген</span>
+        </div>
+        <div class="code-actions">
+          <span id="copyFeedback" class="copy-feedback" aria-live="polite"></span>
+          <button id="revertCodeBtn" class="btn btn-ghost btn-sm" type="button">
+            Үлгіге қайтару
+          </button>
+          <button id="copyCodeBtn" class="btn btn-secondary" type="button">
+            Кодты көшіру
+          </button>
+        </div>
+      </div>
+      <textarea
+        id="codeEditor"
+        class="code-editor"
+        rows="6"
+        spellcheck="false"
+        aria-label="Компонент кодын өңдеуші"
+      ></textarea>
+    </section>
+
+    <section id="stateSection" class="panel" data-depth-layer="z-index: 2 · Section 07" aria-labelledby="stateInspectorTitle">
+      <div class="panel-head">
+        <div class="code-title-group">
+          <h2 id="stateInspectorTitle">7. Күй инспекторы және JSON импорт/экспорт</h2>
+          <span class="badge">localStorage</span>
+        </div>
+        <div class="code-actions">
+          <button id="toggleImportBtn" class="btn btn-ghost" type="button">
+            JSON импорттау
+          </button>
+          <button id="copyStateBtn" class="btn btn-secondary" type="button">
+            Күйді көшіру
+          </button>
+        </div>
+      </div>
+      <pre><code id="stateInspectorPreview"></code></pre>
+
+      <div id="importStateBox" class="import-box hidden">
+        <textarea
+          id="importStateTextarea"
+          class="import-textarea"
+          rows="5"
+          placeholder='{"theme":"dark","mood":"studio","accent":"terracotta","ringMode":"hyper","activeTab":"state","category":"all","activeTag":"","sortBy":"default","search":"","snippet":"buttons","openAccordionId":"acc-1","compactMode":false,"autoScrollCode":true}'
+          aria-label="Импортталатын JSON күйі"
+        ></textarea>
+        <div class="import-actions">
+          <button id="applyImportBtn" class="btn btn-primary" type="button">
+            Қолдану
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+  <div id="modalBackdrop" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modalTitle">Жаңа компонент туралы ескертпе</h2>
+        <button id="closeModalBtn" class="btn btn-ghost" type="button" aria-label="Жабу">✕</button>
+      </div>
+      <p>
+        Уақыт машинасы (Undo/Redo), Web Audio тактильді микро-дыбыстар, 3D Рентген қабаттары, атмосфера көңіл-күйі, жанды пульс, код сақинасының резонансы, таңдаулылар, салыстыру тізімі және сүзгілер <code>localStorage</code> ішінде сақталады.
+      </p>
+      <div class="modal-actions">
+        <button id="confirmModalBtn" class="btn btn-primary" type="button">Түсінікті</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottomPetsStage" class="bottom-pets-stage" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
